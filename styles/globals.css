@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 0;
   margin: 0;
 }
@@ -15,11 +16,10 @@ a {
   }
 }
 
-{
-  position: absolute;
-  top: 40px;
-  height: 200px;
-  width: 100%;
-  background-color: #fff;
-  overflow-y: scroll;
+h4{
+  font-size: 16px;
+}
+
+p {
+  font-size: 12px;
 }

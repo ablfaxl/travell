@@ -12,23 +12,27 @@ import {
   StyledDivder,
 } from './HomePageStyle';
 import { useState } from 'react';
-import Modal from '../module/Modal';
 
 const HomePage = () => {
   const [modal, setModal] = useState(false);
 
   return (
     <>
-      <ContainerBox onClick={() => {setModal(false)}}>
+      <ContainerBox
+        component={'div'}
+        onClick={() => {
+          setModal(false);
+        }}
+      >
         <CardSection>
-          <HeaderBox>
-            <IconContainerLeft>
+          <HeaderBox component={'div'}>
+            <IconContainerLeft component={'div'}>
               <FlightOutlinedIcon
                 sx={{ color: 'white', bgcolor: 'transparent' }}
               />
               <h5 style={{ color: '#fff', fontWeight: 'bold' }}>flight</h5>
             </IconContainerLeft>
-            <IconContainerRight>
+            <IconContainerRight component={'div'}>
               <MeetingRoomOutlinedIcon
                 sx={{ color: '#c6c6c6', bgcolor: 'transparent' }}
               />
@@ -36,7 +40,7 @@ const HomePage = () => {
             </IconContainerRight>
           </HeaderBox>
           <StyledDivder />
-          <Box sx={{ paddingTop: '3rem' }}>
+          <Box component={'div'} sx={{ paddingTop: '3rem' }}>
             <TravellCard modal={modal} setModal={setModal} />
             {/* {modal && <Modal />} */}
           </Box>
