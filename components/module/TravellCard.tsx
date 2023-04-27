@@ -22,8 +22,8 @@ const TravellCard: FC<{
   modal2: boolean;
   setModal2: Dispatch<SetStateAction<boolean>>;
 }> = ({ modal, setModal, modal2, setModal2 }) => {
-  const [origin, setOrigin] = useState<string>('..');
-  const [destination, setDestination] = useState<string>('..');
+  const [origin, setOrigin] = useState<string>('');
+  const [destination, setDestination] = useState<string>('');
   const [data, setData] = useState<DataResponseType>([]);
   const [loading, setLoading] = useState(false);
   const [originUrll, setoriginUrll] = useState<
@@ -36,6 +36,7 @@ const TravellCard: FC<{
   const router = useRouter();
 
   useEffect(() => {
+    if (!origin) return;
     fetch(`https://api.beta.safrat.me/flight/place/search/?&query=${origin}`)
       .then(res => res.json())
       .then(data => {
@@ -45,6 +46,7 @@ const TravellCard: FC<{
   }, [origin]);
 
   useEffect(() => {
+    if (!destination) return;
     fetch(
       `https://api.beta.safrat.me/flight/place/search/?&query=${destination}`
     )
