@@ -15,6 +15,7 @@ import { useState } from 'react';
 
 const HomePage = () => {
   const [modal, setModal] = useState(false);
+  const [modal2, setModal2] = useState(false);
 
   return (
     <>
@@ -41,8 +42,12 @@ const HomePage = () => {
           </HeaderBox>
           <StyledDivder />
           <Box component={'div'} sx={{ paddingTop: '3rem' }}>
-            <TravellCard modal={modal} setModal={setModal} />
-            {/* {modal && <Modal />} */}
+            <TravellCard
+              modal={modal}
+              setModal={setModal}
+              modal2={modal2}
+              setModal2={setModal2}
+            />
           </Box>
         </CardSection>
       </ContainerBox>
