@@ -25,7 +25,6 @@ const TravellCard: FC<{
   const [origin, setOrigin] = useState<string>('');
   const [destination, setDestination] = useState<string>('');
   const [data, setData] = useState<DataResponseType>([]);
-  const [loading, setLoading] = useState(false);
   const [originUrll, setoriginUrll] = useState<
     SetStateAction<never[] | string>
   >([]);
@@ -41,7 +40,7 @@ const TravellCard: FC<{
       .then(res => res.json())
       .then(data => {
         setData(data);
-        setLoading(true);
+        // setLoading(true);
       });
   }, [origin]);
 
@@ -53,7 +52,7 @@ const TravellCard: FC<{
       .then(res => res.json())
       .then(data => {
         setData(data);
-        setLoading(true);
+        // setLoading(true);
       });
   }, [destination]);
 
@@ -77,7 +76,7 @@ const TravellCard: FC<{
     );
   };
 
-  if (!loading) return <p>Please Wait...</p>;
+  // if (!loading) return <p>Please Wait...</p>;
 
   return (
     <>
@@ -107,7 +106,7 @@ const TravellCard: FC<{
           onChange={e => setDestination(e.target.value)}
           value={destination}
         />
-        {modal ? (
+        {modal && (
           <ModelBox component={'div'}>
             <Stack component={'div'}>
               {data.map(item => (
@@ -156,11 +155,9 @@ const TravellCard: FC<{
               ))}
             </Stack>
           </ModelBox>
-        ) : (
-          !loading
         )}
         {/*  */}
-        {modal2 ? (
+        {modal2 && (
           <ModelBox component={'div'}>
             <Stack component={'div'}>
               {data.map(item => (
@@ -209,8 +206,6 @@ const TravellCard: FC<{
               ))}
             </Stack>
           </ModelBox>
-        ) : (
-          !loading
         )}
         <br />
       </Container>
