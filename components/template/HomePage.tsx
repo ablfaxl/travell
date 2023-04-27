@@ -23,6 +23,7 @@ const HomePage = () => {
         component={'div'}
         onClick={() => {
           setModal(false);
+          setModal2(false);
         }}
       >
         <CardSection>

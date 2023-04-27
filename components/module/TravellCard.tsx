@@ -12,6 +12,8 @@ import {
 import { DataResponseType } from './TravelCardType';
 import FmdGoodOutlinedIcon from '@mui/icons-material/FmdGoodOutlined';
 import LoopIcon from '@mui/icons-material/Loop';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const TravellCard: FC<{
   modal: boolean;
@@ -22,17 +24,18 @@ const TravellCard: FC<{
   const [origin, setOrigin] = useState<string>('..');
   const [destination, setDestination] = useState<string>('..');
   const [data, setData] = useState<DataResponseType>([]);
-  const [data2, setData2] = useState<DataResponseType>([]);
   const [loading, setLoading] = useState(false);
+  const [originUrll, setoriginUrll] = useState<SetStateAction<never[] | string>>([]);
+  const [destinationUrll, setDestinationUrll] = useState<SetStateAction<never[] | string>>([]);
+
+  const router = useRouter();
 
   useEffect(() => {
     fetch(`https://api.beta.safrat.me/flight/place/search/?&query=${origin}`)
       .then(res => res.json())
       .then(data => {
         setData(data);
-        setData2(data);
         setLoading(true);
-        console.log(data);
       });
   }, [origin]);
 
@@ -43,11 +46,23 @@ const TravellCard: FC<{
       .then(res => res.json())
       .then(data => {
         setData(data);
-        setData2(data);
         setLoading(true);
-        console.log(data);
       });
   }, [destination]);
+
+  const destinationUrl = (DesCityCode: string ): void => {
+    setDestinationUrll(DesCityCode);
+  };
+
+  const originUrl = (OrgCityCode: string): void => {
+    setoriginUrll(OrgCityCode);
+  };
+
+  const SubmitHandler = () => {
+    router.push(
+      `https://beta.safrat.me/en/flights?adult=1&child=0&destinationCode=${destinationUrll}&destinationCountry=${destination}&destinationLabel=${' '}&destinationType=CITY&flightClass=ECONOMY&infant=0&originCode=${originUrll}&originCountry=${origin}&originLabel=${'OrgiCity'}&originType=CITY&start=2023-4-27&tripType=ONEWAY`
+    );
+  };
 
   if (!loading) return <p>Please Wait...</p>;
 
@@ -85,6 +100,7 @@ const TravellCard: FC<{
               {data.map(item => (
                 <>
                   <Box
+                    key={item.countryCode}
                     component={'div'}
                     sx={{
                       p: '1rem',
@@ -96,6 +112,9 @@ const TravellCard: FC<{
                       cursor: 'pointer',
                     }}
                     onClick={() => {
+                      originUrl(
+                        item.cities[0].cityCode,
+                      );
                       setOrigin(item.cities[0].cityNames[1].value);
                     }}
                   >
@@ -133,10 +152,10 @@ const TravellCard: FC<{
         {modal2 ? (
           <ModelBox component={'div'}>
             <Stack component={'div'}>
-              {data2.map(item => (
+              {data.map(item => (
                 <>
-                  2
                   <Box
+                    key={item.countryCode}
                     component={'div'}
                     sx={{
                       p: '1rem',
@@ -148,6 +167,10 @@ const TravellCard: FC<{
                       cursor: 'pointer',
                     }}
                     onClick={() => {
+                      destinationUrl(
+                        item.cities[0].cityCode,
+                    
+                      );
                       setDestination(item.cities[0].cityNames[1].value);
                     }}
                   >
@@ -183,9 +206,16 @@ const TravellCard: FC<{
         )}
         <br />
       </Container>
-      {/* <Box sx={{pt:15}}>
-      <Button variant="contained">ss</Button>
-      </Box> */}
+
+      <Stack sx={{ pt: 10 }}>
+        <Button
+          onClick={SubmitHandler}
+          variant="contained"
+          // sx={{ zIndex: '-1' }}
+        >
+          ss
+        </Button>
+      </Stack>
     </>
   );
 };

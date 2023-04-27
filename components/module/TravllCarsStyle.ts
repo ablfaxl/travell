@@ -5,6 +5,7 @@ export const Container = styled(Box)(
         display: flex;
         align-items: center;
         position: relative;
+        z-index: 1;
     `
 );
 
