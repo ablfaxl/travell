@@ -1,4 +1,4 @@
-import { TextField, Box, styled } from '@mui/material';
+import { TextField, Box, Button, styled } from '@mui/material';
 
 export const Container = styled(Box)(
   ({ theme: breakpoint }) => `
@@ -14,7 +14,7 @@ export const LoopIconBox = styled(Box)(
     border: 1.5px solid #c6c6c6;
     height: 40;
     padding: 2px 6px 0;
-    // border-color: #c6c6c6;
+    cursor: pointer;
     `
 );
 
@@ -82,7 +82,6 @@ export const ModelBox = styled(Box)(
   `
 );
 
-
 export const StyledBox = styled(Box)(
   ({ theme: breakpoint }) => `
         display: flex;
@@ -101,3 +100,13 @@ export const StyledBox2 = styled(Box)(
         gap: 10px;
     `
 );
+
+export const CustomButton = styled(Button)`
+  background-color: #f24c4c;
+  color: white;
+  border-radius: 5px;
+  padding: 10px 20px;
+  &:hover {
+    background-color: #af2020;
+  }
+`;

@@ -1,5 +1,5 @@
 import { useState, useEffect, FC, SetStateAction, Dispatch } from 'react';
-import { Stack, Box, Button } from '@mui/material';
+import { Stack, Box } from '@mui/material';
 import {
   OriginTextField,
   DestinationTextField,
@@ -8,6 +8,7 @@ import {
   ModelBox,
   StyledBox,
   StyledBox2,
+  CustomButton,
 } from './TravllCarsStyle';
 import { DataResponseType } from './TravelCardType';
 import FmdGoodOutlinedIcon from '@mui/icons-material/FmdGoodOutlined';
@@ -25,8 +26,12 @@ const TravellCard: FC<{
   const [destination, setDestination] = useState<string>('..');
   const [data, setData] = useState<DataResponseType>([]);
   const [loading, setLoading] = useState(false);
-  const [originUrll, setoriginUrll] = useState<SetStateAction<never[] | string>>([]);
-  const [destinationUrll, setDestinationUrll] = useState<SetStateAction<never[] | string>>([]);
+  const [originUrll, setoriginUrll] = useState<
+    SetStateAction<never[] | string>
+  >([]);
+  const [destinationUrll, setDestinationUrll] = useState<
+    SetStateAction<never[] | string>
+  >([]);
 
   const router = useRouter();
 
@@ -50,12 +55,18 @@ const TravellCard: FC<{
       });
   }, [destination]);
 
-  const destinationUrl = (DesCityCode: string ): void => {
+  const destinationUrl = (DesCityCode: string): void => {
     setDestinationUrll(DesCityCode);
   };
 
   const originUrl = (OrgCityCode: string): void => {
     setoriginUrll(OrgCityCode);
+  };
+
+  const switchState = () => {
+    const temp = origin;
+    setOrigin(destination);
+    setDestination(temp);
   };
 
   const SubmitHandler = () => {
@@ -80,7 +91,7 @@ const TravellCard: FC<{
           onChange={e => setOrigin(e.target.value)}
           value={origin}
         />
-        <LoopIconBox component={'div'}>
+        <LoopIconBox onClick={switchState} component={'div'}>
           <LoopIcon sx={{ marginTop: 1 }} />
         </LoopIconBox>
         <DestinationTextField
@@ -100,7 +111,7 @@ const TravellCard: FC<{
               {data.map(item => (
                 <>
                   <Box
-                    key={item.countryCode}
+                    key={item.cities[0].cityNames[1].value}
                     component={'div'}
                     sx={{
                       p: '1rem',
@@ -112,9 +123,7 @@ const TravellCard: FC<{
                       cursor: 'pointer',
                     }}
                     onClick={() => {
-                      originUrl(
-                        item.cities[0].cityCode,
-                      );
+                      originUrl(item.cities[0].cityCode);
                       setOrigin(item.cities[0].cityNames[1].value);
                     }}
                   >
@@ -155,7 +164,7 @@ const TravellCard: FC<{
               {data.map(item => (
                 <>
                   <Box
-                    key={item.countryCode}
+                    key={item.cities[0].cityNames[1].value}
                     component={'div'}
                     sx={{
                       p: '1rem',
@@ -167,10 +176,7 @@ const TravellCard: FC<{
                       cursor: 'pointer',
                     }}
                     onClick={() => {
-                      destinationUrl(
-                        item.cities[0].cityCode,
-                    
-                      );
+                      destinationUrl(item.cities[0].cityCode);
                       setDestination(item.cities[0].cityNames[1].value);
                     }}
                   >
@@ -208,13 +214,9 @@ const TravellCard: FC<{
       </Container>
 
       <Stack sx={{ pt: 10 }}>
-        <Button
-          onClick={SubmitHandler}
-          variant="contained"
-          // sx={{ zIndex: '-1' }}
-        >
-          ss
-        </Button>
+        <CustomButton onClick={SubmitHandler} variant="contained">
+          SEARCH FLIGHTS
+        </CustomButton>
       </Stack>
     </>
   );
